@@ -1,0 +1,23 @@
+# Remover .php e .html do URL com o modulo rewrite
+# Rewrite precisa do modulo rewrite
+# sudo a2enmod rewrite
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule (.*) $1.php [L]
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule (.*) $1.html [L]
+
+<files setupdatabase.txt >
+    deny from all
+</files>
+
+ErrorDocument 403 /notfound.html
+ErrorDocument 404 /notfound.html
+ErrorDocument 500 /notfound.html
+
+# Disable Directory Browsing
+Options All -Indexes
+
+# Pass http headers para o php
+CGIPassAuth On
