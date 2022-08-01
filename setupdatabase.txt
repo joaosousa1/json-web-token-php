@@ -1,0 +1,71 @@
+CREATE USER 'festas_user'@'localhost' IDENTIFIED BY 'passworD1_';
+
+CREATE DATABASE minhofestas;
+
+GRANT ALL PRIVILEGES ON minhofestas.* TO 'festas_user'@'localhost';
+
+FLUSH PRIVILEGES;
+
+USE minhofestas;
+
+DROP TABLE IF EXISTS `festas`;
+CREATE TABLE festas (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+nomeFesta VARCHAR(150) NOT NULL,
+descricao VARCHAR(250),
+distrito VARCHAR(70),
+concelho VARCHAR(70),
+freguesia VARCHAR(70),
+nomeSanto VARCHAR(150),
+religiosa BOOL,
+dataInicio DATE,
+dataFim DATE,
+posGps VARCHAR(70),
+link VARCHAR(150)
+);
+
+INSERT INTO festas (
+    nomeFesta,
+    descricao,
+    distrito,
+    concelho,
+    freguesia,
+    nomeSanto,
+    religiosa,
+    dataInicio,
+    dataFim,
+    posGps,
+    link
+    )
+VALUES (
+    "São João",
+    "Festas da cidade de Braga",
+    "Braga",
+    "Braga",
+    "",
+    "null",
+    false,
+    "2022-06-24",
+    "2022-06-24",
+    "localizacao",
+    "www  xpto .pt"
+);
+
+DROP TABLE IF EXISTS `utilizadores`;
+CREATE TABLE utilizadores (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR(150) NOT NULL,
+email VARCHAR(100),
+password VARCHAR(100),
+);
+
+INSERT INTO utilizadores (
+    nome,
+    email,
+    password
+    )
+VALUES (
+    "teste",
+    "teste",
+    MD5("teste")
+);

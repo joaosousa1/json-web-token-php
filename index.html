@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>teste front-end</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <!-- exemplo simples de como acessar os enpoits da api do strapi no front-end -->
+    <!-- sirva esta página com ajuda do vscode simple server -->
+</head>
+<body>
+<div class="content">
+    <h2 id="username"></h2>
+    <div id="login_frame">
+        <div class="form">
+            <input type="email" name="" id="email" placeholder="email">
+            <input type="password" name="" id="pass" placeholder="password">
+            <button onClick="login()">login</button>
+        </div>
+        <p id="loginerro"></p>
+    </div>
+    <div id="logout_frame">
+        <button onClick="logOut()">logout</button>
+    </div>
+    <hr>
+    <div>
+        <button onClick="getFestas()">GET JSON data</button>
+        <p id="lista">JSON</p>
+    </div>
+</div>
+</body>
+<script>
+let login_frame = document.getElementById("login_frame");
+let logout_frame = document.getElementById("logout_frame");
+
+function show_login() {
+    login_frame.style.display = "block"
+    logout_frame.style.display = "none"
+}
+
+function hide_login() {
+    login_frame.style.display = "none"
+    logout_frame.style.display = "block"
+}
+
+function getStatus() {    
+    if ( sessionStorage.jwt == "null" || sessionStorage.jwt == "undefined" ) {
+        show_login()
+    } else {
+        hide_login()
+    }
+}
+getStatus()
+
+function logOut() {
+    show_login()
+    document.getElementById("email").value = ""
+    document.getElementById("pass").value = ""
+    sessionStorage.jwt = null
+    document.getElementById("username").innerText = ""
+    document.getElementById("lista").innerText = ""
+    document.getElementById("loginerro").innerText = ""
+}
+
+async function getFestas() {
+let lista = document.getElementById("lista")
+
+const rawResponse = await fetch('http://localhost:5000/api/festas', {
+    method: 'GET',
+    headers: {
+        Authorization: sessionStorage.jwt,
+        //Authorization: 'Bearer ' + sessionStorage.jwt,
+    }
+});
+
+const content = await rawResponse.json();
+console.log(content);
+lista.innerText = JSON.stringify(content)
+
+getStatus()
+}
+
+async function login() {
+let email = document.getElementById("email").value
+let pass = document.getElementById("pass").value
+
+console.log(email + " " + pass)
+
+const rawResponse = await fetch('http://localhost:5000/api/auth.php', {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+    body: JSON.stringify( { "email": email, "password": pass })
+});
+
+const content = await rawResponse.json();
+
+console.log(content)
+
+sessionStorage.jwt = content.jwt
+
+document.getElementById("username").innerText = "User: " + content.useremail
+document.getElementById("loginerro").innerText = content.erromsg
+
+getStatus()
+}
+</script>
+</html>
