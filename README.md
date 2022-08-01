@@ -1,5 +1,5 @@
 
-Simples implemantaçao do json web token no PHP.
+Simples implementaçao do json web token no PHP.
 
 Após o login, o servidor responde com um json, contendo o jwt.
 
