@@ -42,13 +42,13 @@ VALUES (
     "Festas da cidade de Braga",
     "Braga",
     "Braga",
-    "",
-    "null",
-    false,
-    "2022-06-24",
-    "2022-06-24",
-    "localizacao",
-    "www  xpto .pt"
+    "São José de São Lázaro e São João do Souto",
+    "São João",
+    true,
+    "2023-06-24",
+    "2023-06-24",
+    "41.551409, -8.422837",
+    "https://www.cm-braga.pt"
 );
 
 DROP TABLE IF EXISTS `utilizadores`;
